@@ -102,3 +102,29 @@ function processFile(evt) {
         alert("Could not read movie data file");
     }
 }
+
+function queryData() {
+    query = document.getElementById("searchbox").value;
+    document.getElementById('textarea').innerHTML += "Querying for movies from 1985.";
+
+    var params = {
+        TableName : "Movies",
+        KeyConditionExpression: "#yr= :yyyy AND begins_with(#title, :tt)",
+        ExpressionAttributeNames:{
+            "#title": "title",
+            "#yr": "year"
+        },
+        ExpressionAttributeValues: {
+            ":tt":query,
+            ":yyyy":2013
+        }
+    };
+
+    docClient.query(params, function(err, data) {
+        if (err) {
+            document.getElementById('textarea').innerHTML += "Unable to query. Error: " + "\n" + JSON.stringify(err, undefined, 2);
+        } else {
+            document.getElementById('textarea').innerHTML += "Querying for movies from 1985: " + "\n" + JSON.stringify(data, undefined, 2);
+        }
+    });
+}

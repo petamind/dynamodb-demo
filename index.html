@@ -53,7 +53,7 @@
         </li>
 
         <li class="nav-item active">
-          <a class="nav-link" href="#modifyData" data-toggle="collapse">Modify data<span
+          <a class="nav-link" href="#tableContainer" data-toggle="collapse">View data<span
               class="sr-only glyphicon glyphicon-chevron-right">(current)</span></a>
         </li>
 
@@ -61,17 +61,16 @@
           <a class="nav-link " href="#about">About</a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" data-toggle="modal"
-          data-target="#exampleModal">Search</button>
+      <form class="form-inline my-2 my-lg-0" action="">
+        <input class="form-control mr-sm-2" id="searchbox" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="queryData();">Search</button>
       </form>
     </div>
   </nav>
 
   <div class="container my-3">
-    <p class="lead">Quick start</p>
-    <p class="lead">1. Configure > 2. Create Table > 3. Import data > 4. Modify</p>
+    <p class="lead">Quick start: use the navigation bar</p>
+    <p class="lead">1. Configure > 2. Create Table > 3. Import data > 4. View data</p>
   </div>
   <form class="container my-5">
     <div class="collapse bg-light" id="collapseConfig">
@@ -112,55 +111,40 @@
     </div>
     <!-- -------------------- -->
     <div class="form-group my-5 collapse" id="loadData">
-      <p class="lead">This will load data stored in <a href="./data/moviedata.json">this JSON file</a>. For security reasons, 
-        please download the file to your local drive first, then use the choose file button to upload the file.</p>
+      <p class="lead">This will load data stored in <a href="./data/moviedata.json" target="_blank">this JSON file</a>.
+        For security reasons,
+        please download the file to your local drive first...</p>
+      <form class="my-3" action="">
+        <a class="btn btn-primary" href="./data/moviedata.json" download>Download</a>
+        <div class="form-group my-3">
+          <label for="fileinput" class="lead">... then use the choose file button to upload the file.</label>
+          <input type="file" class="form-control-file" id="fileinput" accept='application/json'>
+        </div>
+      </form>
 
-      <form method="get" action="./data/moviedata.json">
-          <button class="btn btn-primary" type="submit">Download!</button>
-          <input class="btn btn-primary" type="file" id="fileinput" accept='application/json' />
-      </form>  
-
-      <div class="custom-file">
-        <input type="file" class="custom-file-input" id="customFile">
-        <label class="custom-file-label" for="customFile">Choose file</label>
-      </div>
-      
       <script>
         document.getElementById('fileinput').addEventListener('change', processFile, false);
       </script>
 
     </div>
   </form>
-<!-- -------------------- -->
+  <!-- -------------------- -->
+  <div class="container collapse my-3" id="tableContainer" >
+    <table class="table thead-dark" id="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Year</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
   <div class="container my-3">
     <label for="textarea">Output</label>
     <textarea class="form-control" readonly id="textarea"
       style="min-height:50px; height: 300px; font-family:'Courier New', Courier, monospace;"></textarea>
-  </div>
-
-
-
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Y DCEP can change our future</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          I know you are curious but Nothing to search for!
-          <br />
-          Tung 😃
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
   </div>
 
 </body>
