@@ -62,8 +62,8 @@
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0" action="">
-        <input class="form-control mr-sm-2" id="searchbox" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="queryData();">Search</button>
+        <input class="form-control mr-sm-2" id="searchbox" type="search" placeholder="Search" aria-label="Search" >
+        <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="queryData();" href="#tableContainer" data-toggle="collapse">Search</button>
       </form>
     </div>
   </nav>
@@ -106,7 +106,7 @@
         </ul>
       </div>
       <input class="btn btn-primary" id="createTableButton" type="button" value="Create Table"
-        onclick="createMovies();" />
+        onclick="createMovies();" href="#createTable" data-toggle="collapse"/>
 
     </div>
     <!-- -------------------- -->
@@ -118,7 +118,7 @@
         <a class="btn btn-primary" href="./data/moviedata.json" download>Download</a>
         <div class="form-group my-3">
           <label for="fileinput" class="lead">... then use the choose file button to upload the file.</label>
-          <input type="file" class="form-control-file" id="fileinput" accept='application/json'>
+          <input type="file" class="form-control-file" id="fileinput" accept='application/json' href="#loadData" data-toggle="collapse">
         </div>
       </form>
 
