@@ -62,8 +62,9 @@
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0" action="">
+        <input class="form-control mr-sm-1" id="yearbox" type="number" placeholder="Year" aria-label="Search" value="2013" style="display: none;">
         <input class="form-control mr-sm-2" id="searchbox" type="search" placeholder="Search" aria-label="Search" >
-        <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="queryData();" href="#tableContainer" data-toggle="collapse">Search</button>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="queryData();">Search</button>
       </form>
     </div>
   </nav>
@@ -124,12 +125,22 @@
 
       <script>
         document.getElementById('fileinput').addEventListener('change', processFile, false);
+        console.log("heelo");
+        var searchbox = document.getElementById('searchbox');
+        searchbox.addEventListener('keyup', function(){
+            console.log("heelo");
+           if(searchbox.value.length == 0){
+             document.getElementById('yearbox').style.display = 'none';
+           } else {
+             document.getElementById('yearbox').style.display = 'block';
+           }
+        },false );
       </script>
 
     </div>
   </form>
   <!-- -------------------- -->
-  <div class="container collapse my-3" id="tableContainer" >
+  <div class="container collapse my-3 show" id="tableContainer" >
     <table class="table" id="table">
       <thead class="thead-dark">
         <tr>

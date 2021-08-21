@@ -104,12 +104,14 @@ function processFile(evt) {
 }
 
 function queryData() {
+    clearTable('table');
     query = document.getElementById("searchbox").value;
+    year = document.getElementById("yearbox").value;
     if (!query) {
         scanData();
         return;
     }
-    document.getElementById('textarea').innerHTML += "Querying for movies from 1985.";
+    document.getElementById('textarea').innerHTML += "\nQuerying for movies from selected year.";
 
     var params = {
         TableName: "Movies",
@@ -120,16 +122,16 @@ function queryData() {
         },
         ExpressionAttributeValues: {
             ":tt": query,
-            ":yyyy": 2013
+            ":yyyy": parseInt(year)
         },
         PageSize: 5
     };
 
     docClient.query(params, function (err, data) {
         if (err) {
-            document.getElementById('textarea').innerHTML += "Unable to query. Error: " + "\n" + JSON.stringify(err, undefined, 2);
+            document.getElementById('textarea').innerHTML += "\nUnable to query. Error: " + "\n" + JSON.stringify(err, undefined, 2);
         } else {
-            document.getElementById('textarea').innerHTML += "Querying for movies from 1985: " + "\n" + JSON.stringify(data, undefined, 2);
+            document.getElementById('textarea').innerHTML += "\nQuerying for movies : " + "\n" + JSON.stringify(data, undefined, 2);
             var table = document.getElementById("table");
 
             data.Items.forEach(function (movie) {
@@ -157,6 +159,7 @@ function queryData() {
 var count = 1;
 function scanData() {
     console.log("Scanning Movies table.");
+    clearTable('table');
     query = document.getElementById("searchbox").value;
     document.getElementById('textarea').innerHTML += "\nQuerying for movies from 1950-now.";
 
@@ -212,4 +215,11 @@ function scanData() {
             });
         }
     };
+}
+function clearTable(tableID) {
+    var table = document.getElementById(tableID)
+    while(table.rows.length > 1) {
+        table.deleteRow(1);
+    }
+    count = 1;
 }
