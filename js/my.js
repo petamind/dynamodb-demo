@@ -105,26 +105,111 @@ function processFile(evt) {
 
 function queryData() {
     query = document.getElementById("searchbox").value;
+    if (!query) {
+        scanData();
+        return;
+    }
     document.getElementById('textarea').innerHTML += "Querying for movies from 1985.";
 
     var params = {
-        TableName : "Movies",
+        TableName: "Movies",
         KeyConditionExpression: "#yr= :yyyy AND begins_with(#title, :tt)",
-        ExpressionAttributeNames:{
+        ExpressionAttributeNames: {
             "#title": "title",
             "#yr": "year"
         },
         ExpressionAttributeValues: {
-            ":tt":query,
-            ":yyyy":2013
-        }
+            ":tt": query,
+            ":yyyy": 2013
+        },
+        PageSize: 5
     };
 
-    docClient.query(params, function(err, data) {
+    docClient.query(params, function (err, data) {
         if (err) {
             document.getElementById('textarea').innerHTML += "Unable to query. Error: " + "\n" + JSON.stringify(err, undefined, 2);
         } else {
             document.getElementById('textarea').innerHTML += "Querying for movies from 1985: " + "\n" + JSON.stringify(data, undefined, 2);
+            var table = document.getElementById("table");
+
+            data.Items.forEach(function (movie) {
+                var row = table.insertRow(-1);
+                var cell0 = row.insertCell(0);
+                var cell1 = row.insertCell(1);
+                var cell2 = row.insertCell(2);
+                var cell3 = row.insertCell(3);
+                try {
+                    cell0.innerHTML = String(count);
+                    cell1.innerHTML = movie.title;
+                    cell2.innerHTML = movie.year;
+                    cell3.innerHTML = movie.info.rating;
+                } catch (error) {
+                    
+                }
+                
+                count++;
+            });
         }
     });
+}
+
+
+var count = 1;
+function scanData() {
+    console.log("Scanning Movies table.");
+    query = document.getElementById("searchbox").value;
+    document.getElementById('textarea').innerHTML += "\nQuerying for movies from 1950-now.";
+
+    var params = {
+        TableName: "Movies",
+        ProjectionExpression: "#yr, title, info.rating",
+        FilterExpression: "#yr between :start_yr and :end_yr AND begins_with(#title, :tt)",
+        ExpressionAttributeNames: {
+            "#title": "title",
+            "#yr": "year"
+        },
+        ExpressionAttributeValues: {
+            ":tt": query,
+            ":start_yr": 1950,
+            ":end_yr": 2021
+        },
+        PageSize: 10,
+        Limit: 10
+    };
+
+    docClient.scan(params, onScan);
+        
+    function onScan(err, data) {
+        if (err) {
+            document.getElementById('textarea').innerHTML += "\nUnable to query. Error: " + "\n" + JSON.stringify(err, undefined, 2);
+        } else {
+            document.getElementById('textarea').innerHTML += "\nQuerying for movies from 1950: " + "\n" + JSON.stringify(data, undefined, 2);
+            var table = document.getElementById("table");
+
+            
+            data.Items.forEach(function (movie) {
+                var row = table.insertRow(-1);
+                var cell0 = row.insertCell(0);
+                var cell1 = row.insertCell(1);
+                var cell2 = row.insertCell(2);
+                var cell3 = row.insertCell(3);
+                try {
+                    cell0.innerHTML = String(count);
+                    cell1.innerHTML = movie.title;
+                    cell2.innerHTML = movie.year;
+                    cell3.innerHTML = movie.info.rating;
+                } catch (error) {
+
+                }
+
+                count++;
+
+                if (typeof data.LastEvaluatedKey != "undefined" && count < 10) {
+                    console.log("Scanning for more...");
+                    params.ExclusiveStartKey = data.LastEvaluatedKey;
+                    docClient.scan(params, onScan);
+                }
+            });
+        }
+    };
 }

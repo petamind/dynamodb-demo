@@ -57,8 +57,8 @@
               class="sr-only glyphicon glyphicon-chevron-right">(current)</span></a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link " href="#about">About</a>
+        <li class="nav-item active">
+          <a class="nav-link " href="#about" data-toggle="collapse">About</a>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0" action="">
@@ -130,12 +130,13 @@
   </form>
   <!-- -------------------- -->
   <div class="container collapse my-3" id="tableContainer" >
-    <table class="table thead-dark" id="table">
-      <thead>
+    <table class="table" id="table">
+      <thead class="thead-dark">
         <tr>
           <th scope="col">#</th>
           <th scope="col">Title</th>
           <th scope="col">Year</th>
+          <th scope="col">Rating</th>
         </tr>
       </thead>
     </table>
@@ -145,6 +146,14 @@
     <label for="textarea">Output</label>
     <textarea class="form-control" readonly id="textarea"
       style="min-height:50px; height: 300px; font-family:'Courier New', Courier, monospace;"></textarea>
+  </div>
+
+  <div class="container collapse" id="about">
+    <h3>About</h3>
+    <p class="lead">This demonstration is based on 
+      <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html" target="_blank">
+    documentations</a> and the movie 
+    <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/samples/moviedata.zip" download="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/samples/moviedata.zip">dataset</a> provided by AWS, implemented by Tung Nguyen-2021.</p>
   </div>
 
 </body>
