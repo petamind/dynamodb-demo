@@ -1,0 +1,168 @@
+<!-- 
+  Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ 
+  This file is licensed under the Apache License, Version 2.0 (the "License").
+  You may not use this file except in compliance with the License. A copy of
+  the License is located at
+ 
+  http://aws.amazon.com/apache2.0/
+ 
+  This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+  CONDITIONS OF ANY KIND, either express or implied. See the License for the
+  specific language governing permissions and limitations under the License.
+
+  Modify by Tung Nguyen @2021
+-->
+<html>
+
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
+  <script src="./js/my.js"></script>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top" id="home">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+      aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand font-weight-bold text-warning" href="#">DynamoDB Demo</a>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+        <li class="nav-item active ">
+          <a class="nav-link" data-toggle="collapse" href="#collapseConfig">Config<span
+              class="sr-only glyphicon glyphicon-chevron-right">(current)</span><i class="fas fa-user"></i></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link glyphicon glyphicon-chevron-right" href="#createTable" data-toggle="collapse">Create
+            table<span class="sr-only glyphicon glyphicon-chevron-right">(current)</span></a>
+        </li>
+
+        <li class="nav-item active">
+          <a class="nav-link" href="#loadData" data-toggle="collapse">Inport data<span
+              class="sr-only glyphicon glyphicon-chevron-right">(current)</span></a>
+        </li>
+
+        <li class="nav-item active">
+          <a class="nav-link" href="#modifyData" data-toggle="collapse">Modify data<span
+              class="sr-only glyphicon glyphicon-chevron-right">(current)</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link " href="#about">About</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" data-toggle="modal"
+          data-target="#exampleModal">Search</button>
+      </form>
+    </div>
+  </nav>
+
+  <div class="container my-3">
+    <p class="lead">Quick start</p>
+    <p class="lead">1. Configure > 2. Create Table > 3. Import data > 4. Modify</p>
+  </div>
+  <form class="container my-5">
+    <div class="collapse bg-light" id="collapseConfig">
+      <div class="form-group">
+        <label for="accessKeyId">Access Key Id</label>
+        <input type="text" class="form-control" id="accessKeyId" aria-describedby="emailHelp"
+          placeholder="Enter access key id">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your credentials with anyone.</small>
+      </div>
+      <div class="form-group">
+        <label for="secretAccessKey">Secret Access Key </label>
+        <input type="text" class="form-control" id="secretAccessKey" placeholder="Secret Access Key ">
+      </div>
+      <div class="form-group">
+        <label for="sessionToken">Session Token </label>
+        <input type="text" class="form-control" id="sessionToken" placeholder="Session Token">
+      </div>
+
+      <button type="button" class="btn btn-primary" onclick="configureAWS();" data-toggle="collapse"
+        href="#collapseConfig">Config AWS</button>
+    </div>
+    <!-- -------------------- -->
+
+    <div class="form-group my-5 collapse" id="createTable">
+      <div>
+        <p class="lead">In this step, you create a table named Movies. The primary key for the table is composed of the
+          following
+          attributes:</p>
+        <ul>
+          <li>year – The partition key. The AttributeType is N for number.</li>
+          <li>title – The sort key. The AttributeType is S for string.
+          </li>
+        </ul>
+      </div>
+      <input class="btn btn-primary" id="createTableButton" type="button" value="Create Table"
+        onclick="createMovies();" />
+
+    </div>
+    <!-- -------------------- -->
+    <div class="form-group my-5 collapse" id="loadData">
+      <p class="lead">This will load data stored in <a href="./data/moviedata.json">this JSON file</a>. For security reasons, 
+        please download the file to your local drive first, then use the choose file button to upload the file.</p>
+
+      <form method="get" action="./data/moviedata.json">
+          <button class="btn btn-primary" type="submit">Download!</button>
+          <input class="btn btn-primary" type="file" id="fileinput" accept='application/json' />
+      </form>  
+
+      <div class="custom-file">
+        <input type="file" class="custom-file-input" id="customFile">
+        <label class="custom-file-label" for="customFile">Choose file</label>
+      </div>
+      
+      <script>
+        document.getElementById('fileinput').addEventListener('change', processFile, false);
+      </script>
+
+    </div>
+  </form>
+<!-- -------------------- -->
+  <div class="container my-3">
+    <label for="textarea">Output</label>
+    <textarea class="form-control" readonly id="textarea"
+      style="min-height:50px; height: 300px; font-family:'Courier New', Courier, monospace;"></textarea>
+  </div>
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Y DCEP can change our future</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          I know you are curious but Nothing to search for!
+          <br />
+          Tung 😃
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
