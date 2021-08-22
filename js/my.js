@@ -87,10 +87,10 @@ function processFile(evt) {
                 };
                 docClient.put(params, function (err, data) {
                     if (err) {
-                        document.getElementById('textarea').innerHTML += "Unable to add movie: " + count + movie.title + "\n";
-                        document.getElementById('textarea').innerHTML += "Error JSON: " + JSON.stringify(err) + "\n";
+                        document.getElementById('textarea').innerHTML += "\nUnable to add movie: " + count + movie.title + "\n";
+                        document.getElementById('textarea').innerHTML += "\nError JSON: " + JSON.stringify(err) + "\n";
                     } else {
-                        document.getElementById('textarea').innerHTML += "PutItem succeeded: " + movie.title + "\n";
+                        document.getElementById('textarea').innerHTML += "\nPutItem succeeded: " + movie.title + "\n";
                         textarea.scrollTop = textarea.scrollHeight;
                     }
                 });
