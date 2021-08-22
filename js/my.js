@@ -5,7 +5,7 @@ var docClient = new AWS.DynamoDB.DocumentClient();
 
 function configureAWS() {
     AWS.config.update({
-        region: "us-east-1",
+        region: document.getElementById('regionCode').value,
         // accessKeyId default can be used while using the downloadable version of DynamoDB. 
         // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
         accessKeyId: document.getElementById('accessKeyId').value,
@@ -96,6 +96,8 @@ function processFile(evt) {
                     }
                 });
             });
+
+            document.getElementById('textarea').innerHTML += "Import finished!\n";
         };
         r.readAsText(file);
     } else {
