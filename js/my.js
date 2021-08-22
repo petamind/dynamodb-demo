@@ -75,7 +75,6 @@ function processFile(evt) {
         r.onload = function (e) {
             var contents = e.target.result;
             var allMovies = JSON.parse(contents);
-
             allMovies.forEach(function (movie) {
                 document.getElementById('textarea').innerHTML += "Processing: " + movie.title + "\n";
                 var params = {
@@ -97,7 +96,7 @@ function processFile(evt) {
                 });
             });
 
-            document.getElementById('textarea').innerHTML += "Import finished!\n";
+            
         };
         r.readAsText(file);
     } else {
