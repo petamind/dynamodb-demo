@@ -58,7 +58,7 @@
         </li>
 
         <li class="nav-item active">
-          <a class="nav-link " href="#about" data-toggle="collapse">About</a>
+          <a class="nav-link " href="#collapseFive" data-toggle="collapse">About</a>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0" action="">
@@ -78,13 +78,13 @@
     <div class="card">
       <div class="card-header" id="headingOne">
         <h4 class="mb-0">
-          <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
             1. AWS Credentials
           </button>
         </h4>
       </div>
   
-      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
         <div class="card-body">
           <div class=" bg-light" id="collapseConfig">
             <div class="form-group">
@@ -117,7 +117,7 @@
       <div class="card-header" id="headingTwo">
         <h4 class="mb-0">
           <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-            2. Create Table in DynamoDB
+            2. Create Table 
           </button>
         </h4>
       </div>
@@ -125,7 +125,7 @@
         <div class="card-body">
           <div class="form-group my-3" id="createTable">
             <div>
-              <p class="lead">In this step, you create a table named Movies. The primary key for the table is composed of the
+              <p class="lead">In this step, you create a table named Movies in AWS DynamoDB. The primary key for the table is composed of the
                 following
                 attributes:</p>
               <ul class="list-group">
@@ -134,7 +134,7 @@
                 </li>
               </ul>
             </div>
-            <input class="btn btn-primary" id="createTableButton" type="button" value="Create Table"
+            <input class="btn btn-primary my-2" id="createTableButton" type="button" value="Create Table"
               onclick="createMovies();" href="#collapseTwo" data-toggle="collapse"/>
       
           </div>
@@ -185,14 +185,14 @@
       <div class="card-header" id="headingFour">
         <h4 class="mb-0">
           <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-            4. Data Table
+            4. View Data (Search)
           </button>
         </h4>
       </div>
-      <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+      <div id="collapseFour" class="collapse " aria-labelledby="headingFour" data-parent="#accordion">
         <div class="card-body">
           <div class="container my-3 show" id="tableContainer" >
-            
+            <p class="lead">Use the search box to query or scan data from the DynamoDB table.</p>
             <table class="table" id="table">
               <thead class="thead-dark">
                 <tr>
@@ -207,6 +207,25 @@
         </div>
       </div>
     </div>
+
+    <div class="card">
+      <div class="card-header" id="headingFive">
+        <h4 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+            5. About
+          </button>
+        </h4>
+      </div>
+      <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+        <div class="card-body">
+          <p class="lead">This demonstration is based on the
+            <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html" target="_blank">
+          documentations</a> and the movie 
+          <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/samples/moviedata.zip" download="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/samples/moviedata.zip">dataset</a> provided by AWS, implemented by Tung Nguyen-2021.</p>
+        </div>
+      </div>
+    </div>
+    
   </div>
 
 
@@ -215,17 +234,9 @@
   
 
   <div class="container my-3">
-    <h3 for="textarea">Console Output:</h3>
+    <h3 for="textarea">Console Output:</h3>  
     <textarea class="form-control" readonly id="textarea"
-      style="min-height:50px; height: 300px; font-family:'Courier New', Courier, monospace;"></textarea>
-  </div>
-
-  <div class="container collapse" id="about">
-    <h3>About</h3>
-    <p class="lead">This demonstration is based on 
-      <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html" target="_blank">
-    documentations</a> and the movie 
-    <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/samples/moviedata.zip" download="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/samples/moviedata.zip">dataset</a> provided by AWS, implemented by Tung Nguyen-2021.</p>
+      style="min-height:50px; height: 250px; font-family:'Courier New', Courier, monospace;"></textarea>
   </div>
 
 </body>
